@@ -1,2 +1,0 @@
-root;golf 4;volkswagen;2000;8000.00
-root;golf 4;volkswagen;2000;8000.00

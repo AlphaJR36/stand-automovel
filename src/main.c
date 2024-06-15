@@ -75,10 +75,10 @@ int main()
     while (!authenticated && !exitProgram)
     {
       clearScreen();
-      printf("Login do Sistema de Stand de Automóveis\n");
-      printf("1. Login\n");
+      headerLogin();
+      printf("\n\n1. Login\n");
       printf("2. Registrar\n");
-      printf("3. Sair\n");
+      printf("3. Sair\n\n");
       printf("Escolha uma opção: ");
       scanf("%d", &option);
       getchar();
@@ -132,11 +132,10 @@ int main()
     {
       clearScreen();
       header();
-      printf("\n\nSistema de Stand de Automóveis\n");
 
       if (isAdminUser(username))
       {
-        printf("1. Adicionar novo carro\n");
+        printf("\n\n1. Adicionar novo carro\n");
         printf("2. Listar todos os carros\n");
         printf("3. Buscar carro por modelo\n");
         printf("4. Remover carro\n");
@@ -146,11 +145,11 @@ int main()
       }
       else
       {
-        printf("1. Listar todos os carros\n");
+        printf("\n\n1. Listar todos os carros\n");
         printf("2. Buscar carro por modelo\n");
         printf("3. Comprar carro\n");
         printf("4. Listar histórico de compras\n");
-        printf("5. Terminar sessão\n");
+        printf("5. Terminar sessão\n\n");
       }
 
       printf("Escolha uma opção: ");
