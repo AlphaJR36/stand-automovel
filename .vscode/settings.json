@@ -6,6 +6,8 @@
     "stdio.h": "c",
     "string.h": "c",
     "utility.h": "c",
-    "car.h": "c"
+    "car.h": "c",
+    "conio.h": "c",
+    "windows.h": "c"
   }
 }

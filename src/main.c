@@ -3,7 +3,7 @@
 #include <conio.h>
 #include <time.h>
 #include <string.h>
-#include <Windows.h>
+#include <windows.h>
 
 #include "components/header.c"
 
@@ -40,8 +40,8 @@ int main()
     {
       clearScreen();
       headerLogin();
-      printf("\n\n1. Login\n");
-      printf("2. Registrar\n");
+      printf("\n\n1. Entrar\n");
+      printf("2. Criar uma conta\n");
       printf("3. Sair\n\n");
       printf("Escolha uma opção: ");
       scanf("%d", &option);
@@ -51,10 +51,12 @@ int main()
 
       if (option == 1)
       {
-        printf("Digite seu username: ");
+        headerSignIn();
+        lineBreak(2);
+        printf("Introduza o nome de utilizador: ");
         fgets(username, 50, stdin);
         username[strcspn(username, "\n")] = '\0';
-        printf("Digite sua senha: ");
+        printf("Introduza a palavra-passe: ");
         hideInput(password, 50);
 
         if (strcmp(username, "root") == 0 && strcmp(password, "admin") == 0)
@@ -69,8 +71,9 @@ int main()
         }
         else
         {
-          printf("Autenticação falhou. Tente novamente.\n");
-          printf("Pressione Enter para continuar...");
+          lineBreak(2);
+          error("Nome de utilizador ou palavra-passe incorretos.\n");
+          printf("Pressione ENTER para continuar...");
           getchar();
         }
       }
@@ -86,8 +89,8 @@ int main()
       }
       else
       {
-        printf("Opção inválida! Tente novamente.\n");
-        printf("Pressione Enter para continuar...");
+        error("Opção inválida! Tente novamente.\n");
+        printf("Pressione ENTER para continuar...");
         getchar();
       }
     }
@@ -100,17 +103,16 @@ int main()
       if (isAdminUser(username))
       {
         printf("\n\n1. Adicionar novo carro\n");
-        printf("2. Listar todos os carros\n");
-        printf("3. Buscar carro por modelo\n");
+        printf("2. Exibir todos os carros\n");
+        printf("3. Procurar carro pelo modelo\n");
         printf("4. Remover carro\n");
-        printf("5. Comprar carro\n");
-        printf("6. Listar histórico de compras\n");
-        printf("7. Terminar sessão\n");
+        printf("5. Ver histórico de compras\n");
+        printf("6. Terminar sessão\n\n");
       }
       else
       {
         printf("\n\n1. Listar todos os carros\n");
-        printf("2. Buscar carro por modelo\n");
+        printf("2. Procurar carro pelo modelo\n");
         printf("3. Comprar carro\n");
         printf("4. Terminar sessão\n\n");
       }
@@ -138,32 +140,16 @@ int main()
           removeCar(cars, &carCount);
           break;
         case 5:
-          if (carCount > 0)
-          {
-            buyCar(cars, &carCount, username);
-            snprintf(purchases[purchaseCount][0], 50, "%s", username);
-            snprintf(purchases[purchaseCount][1], 50, "%s", cars[carCount].model);
-            snprintf(purchases[purchaseCount][2], 50, "%s", cars[carCount].brand);
-            snprintf(purchases[purchaseCount][3], 50, "%d", cars[carCount].year);
-            snprintf(purchases[purchaseCount][4], 50, "%.2f", cars[carCount].price);
-            purchaseCount++;
-          }
-          else
-          {
-            printf("Não há carros disponíveis para compra.\n");
-          }
-          break;
-        case 6:
           listPurchases(purchases, purchaseCount);
           break;
-        case 7:
+        case 6:
           saveCars(cars, carCount);
           savePurchases(purchases, purchaseCount);
-          printf("Terminando sessão e salvando dados...\n");
+          success("A sessão foi terminada.\n");
           authenticated = 0;
           break;
         default:
-          printf("Opção inválida! Tente novamente.\n");
+          error("Opção inválida! Tente novamente.\n");
         }
       }
       else
@@ -181,28 +167,28 @@ int main()
           {
             buyCar(cars, &carCount, username);
             snprintf(purchases[purchaseCount][0], 50, "%s", username);
-            snprintf(purchases[purchaseCount][1], 50, "%s", cars[carCount].model);
-            snprintf(purchases[purchaseCount][2], 50, "%s", cars[carCount].brand);
-            snprintf(purchases[purchaseCount][3], 50, "%d", cars[carCount].year);
-            snprintf(purchases[purchaseCount][4], 50, "%.2f", cars[carCount].price);
+            snprintf(purchases[purchaseCount][1], 50, "%s", cars[carCount - 1].model);
+            snprintf(purchases[purchaseCount][2], 50, "%s", cars[carCount - 1].brand);
+            snprintf(purchases[purchaseCount][3], 50, "%d", cars[carCount - 1].year);
+            snprintf(purchases[purchaseCount][4], 50, "%.2f", cars[carCount - 1].price);
             purchaseCount++;
           }
           else
           {
-            printf("Não há carros disponíveis para compra.\n");
+            warning("Não há carros disponíveis para compra.\n");
           }
           break;
         case 4:
           saveCars(cars, carCount);
           savePurchases(purchases, purchaseCount);
-          printf("Terminando sessão e salvando dados...\n");
+          success("A sessão foi terminada.\n");
           authenticated = 0;
           break;
         default:
-          printf("Opção inválida! Tente novamente.\n");
+          error("Opção inválida! Tente novamente.\n");
         }
       }
-      printf("Pressione Enter para continuar...");
+      printf("Pressione ENTER para continuar...");
       getchar();
     }
   }
