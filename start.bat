@@ -2,7 +2,7 @@
 setlocal
 
 echo Compilando o programa...
-gcc -o src/output/stand.exe src/main.c
+gcc -o src/output/stand.exe src/main.c src/functions/car.c src/functions/purchase.c src/functions/user.c src/functions/utility.c
 if %errorlevel% neq 0 (
     echo Erro na compilacao.
     exit /b %errorlevel%
