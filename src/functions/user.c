@@ -21,7 +21,7 @@ void registerUser(User users[], int *count)
 {
   if (*count >= MAX_USERS)
   {
-    warning("Limite de utilizadores atingido.\n");
+    warning("Limite de utilizadores atingido.");
     return;
   }
 
@@ -63,7 +63,7 @@ void saveUsers(User users[], int count)
   FILE *file = fopen(FILENAME_USERS, "w");
   if (file == NULL)
   {
-    error("Abrir ficheiro para guardar utilizadores.\n");
+    error("Abrir ficheiro para guardar utilizadores.");
     return;
   }
 
@@ -80,7 +80,7 @@ void loadUsers(User users[], int *count)
   FILE *file = fopen(FILENAME_USERS, "r");
   if (file == NULL)
   {
-    error("Abrir ficheiro para carregar utilizadores.\n");
+    error("Abrir ficheiro para carregar utilizadores.");
     return;
   }
 

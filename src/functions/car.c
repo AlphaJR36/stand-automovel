@@ -14,31 +14,32 @@ void addCar(Car cars[], int *count)
 
     headerAddNewCar();
     lineBreak(2);
-    printf("Insira o modelo do carro: ");
+    printf("Introduza o modelo do carro: ");
     fgets(newCar.model, 50, stdin);
     newCar.model[strcspn(newCar.model, "\n")] = '\0';
 
-    printf("Insira a marca do carro: ");
+    printf("Introduza a marca do carro: ");
     fgets(newCar.brand, 50, stdin);
     newCar.brand[strcspn(newCar.brand, "\n")] = '\0';
 
-    printf("Insira o ano do carro: ");
+    printf("Introduza o ano do carro: ");
     scanf("%d", &newCar.year);
     getchar();
 
-    printf("Insira o preço do carro (em euros): ");
+    printf("Introduza o preço do carro (em euros): ");
     scanf("%f", &newCar.price);
     getchar();
 
     cars[*count] = newCar;
     (*count)++;
-    success("O carro foi adicionado!\n");
+    lineBreak(2);
+    success("O carro foi adicionado!");
 
     saveCars(cars, *count);
   }
   else
   {
-    warning("O limite de carros foi atingido.\n");
+    warning("O limite de carros foi atingido.");
   }
 }
 
@@ -49,15 +50,17 @@ void listCars(Car cars[], int count)
 
   if (count == 0)
   {
-    warning("Não há carros disponíveis.\n");
+    warning("Não há carros disponíveis.");
     return;
   }
 
-  printf("Todos os carros disponíveis:\n\n");
+  printf("Todos os carros disponíveis:");
+  lineBreak(2);
   for (int i = 0; i < count; i++)
   {
     printf("Modelo: %s, Marca: %s, Ano: %d, Preço: €%.2f\n", cars[i].model, cars[i].brand, cars[i].year, cars[i].price);
   }
+  lineBreak(2);
 }
 
 void searchCar(Car cars[], int count)
@@ -67,12 +70,12 @@ void searchCar(Car cars[], int count)
 
   if (count == 0)
   {
-    warning("Não há carros disponíveis para pesquisa.\n");
+    warning("Não há carros disponíveis para pesquisa.");
     return;
   }
 
   char searchModel[50];
-  printf("Insira o modelo do carro que deseja procurar: ");
+  printf("Introduza o modelo do carro que deseja procurar: ");
   fgets(searchModel, 50, stdin);
   searchModel[strcspn(searchModel, "\n")] = '\0';
 
@@ -81,7 +84,9 @@ void searchCar(Car cars[], int count)
   {
     if (strcmp(cars[i].model, searchModel) == 0)
     {
-      printf("Carro encontrado - Modelo: %s, Marca: %s, Ano: %d, Preço: €%.2f\n", cars[i].model, cars[i].brand, cars[i].year, cars[i].price);
+      lineBreak(2);
+      printf("Carro encontrado - Modelo: %s, Marca: %s, Ano: %d, Preço: €%.2f", cars[i].model, cars[i].brand, cars[i].year, cars[i].price);
+      lineBreak(2);
       found = 1;
       break;
     }
@@ -89,7 +94,7 @@ void searchCar(Car cars[], int count)
 
   if (!found)
   {
-    error("Nenhum carro encontrado com esse modelo.\n");
+    error("Nenhum carro encontrado com esse modelo.");
   }
 }
 
@@ -100,12 +105,12 @@ void removeCar(Car cars[], int *count)
 
   if (*count == 0)
   {
-    warning("Não há carros disponíveis para remoção.\n");
+    warning("Não há carros disponíveis para remoção.");
     return;
   }
 
   char model[50];
-  printf("Insira o modelo do carro a ser removido: ");
+  printf("Introduza o modelo do carro a ser removido: ");
   fgets(model, 50, stdin);
   model[strcspn(model, "\n")] = '\0';
 
@@ -120,7 +125,8 @@ void removeCar(Car cars[], int *count)
       }
       (*count)--;
       found = 1;
-      success("O carro foi removido!\n");
+      lineBreak(2);
+      success("O carro foi removido!");
 
       saveCars(cars, *count);
       break;
@@ -129,7 +135,7 @@ void removeCar(Car cars[], int *count)
 
   if (!found)
   {
-    error("Nenhum carro encontrado com esse modelo.\n");
+    error("Nenhum carro encontrado com esse modelo.");
   }
 }
 
@@ -140,12 +146,12 @@ void buyCar(Car cars[], int *count, char purchases[][5][50], int *purchaseCount,
 
   if (*count == 0)
   {
-    warning("Nenhum carro está disponível para compra.\n");
+    warning("Nenhum carro está disponível para compra.");
     return;
   }
 
   char buyModel[50];
-  printf("Insira o modelo do carro que deseja comprar: ");
+  printf("Introduza o modelo do carro que deseja comprar: ");
   fgets(buyModel, 50, stdin);
   buyModel[strcspn(buyModel, "\n")] = '\0';
 
@@ -155,6 +161,7 @@ void buyCar(Car cars[], int *count, char purchases[][5][50], int *purchaseCount,
     if (strcmp(cars[i].model, buyModel) == 0)
     {
       printf("Carro encontrado - Modelo: %s, Marca: %s, Ano: %d, Preço: €%.2f\n", cars[i].model, cars[i].brand, cars[i].year, cars[i].price);
+      lineBreak(2);
 
       // Confirmar se deseja comprar o carro
       printf("Deseja comprar este carro? (S/N): ");
@@ -164,7 +171,8 @@ void buyCar(Car cars[], int *count, char purchases[][5][50], int *purchaseCount,
 
       if (choice == 'S' || choice == 's')
       {
-        success("A compra foi realizada!\n");
+        lineBreak(2);
+        success("A compra foi realizada!");
 
         // Adicionar informações da compra ao histórico
         snprintf(purchases[*purchaseCount][0], 50, "%s", username);
@@ -193,7 +201,7 @@ void buyCar(Car cars[], int *count, char purchases[][5][50], int *purchaseCount,
 
   if (!found)
   {
-    error("O carro não foi encontrado.\n");
+    error("O carro não foi encontrado.");
   }
 
   saveCars(cars, *count);
@@ -205,7 +213,7 @@ void saveCars(Car cars[], int count)
   FILE *file = fopen("cars.txt", "w");
   if (file == NULL)
   {
-    error("Erro ao abrir o arquivo de carros.\n");
+    error("Erro ao abrir o arquivo de carros.");
     return;
   }
 

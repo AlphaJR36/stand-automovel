@@ -40,9 +40,12 @@ int main()
     {
       clearScreen();
       headerLogin();
-      printf("\n\n1. Entrar\n");
+
+      lineBreak(2);
+      printf("1. Entrar\n");
       printf("2. Criar uma conta\n");
-      printf("3. Sair\n\n");
+      printf("3. Sair");
+      lineBreak(2);
       printf("Escolha uma opção: ");
       scanf("%d", &option);
       getchar();
@@ -72,7 +75,7 @@ int main()
         else
         {
           lineBreak(2);
-          error("Nome de utilizador ou palavra-passe incorretos.\n");
+          error("Nome de utilizador ou palavra-passe incorretos.");
           printf("Pressione ENTER para continuar...");
           getchar();
         }
@@ -89,7 +92,7 @@ int main()
       }
       else
       {
-        error("Opção inválida! Tente novamente.\n");
+        error("Opção inválida! Tente novamente.");
         printf("Pressione ENTER para continuar...");
         getchar();
       }
@@ -102,19 +105,23 @@ int main()
 
       if (isAdminUser(username))
       {
-        printf("\n\n1. Adicionar novo carro\n");
+        lineBreak(2);
+        printf("1. Adicionar novo carro\n");
         printf("2. Exibir todos os carros\n");
         printf("3. Procurar carro pelo modelo\n");
         printf("4. Remover carro\n");
         printf("5. Ver histórico de compras\n");
-        printf("6. Terminar sessão\n\n");
+        printf("6. Terminar sessão");
+        lineBreak(2);
       }
       else
       {
-        printf("\n\n1. Listar todos os carros\n");
+        lineBreak(2);
+        printf("1. Exibir todos os carros\n");
         printf("2. Procurar carro pelo modelo\n");
         printf("3. Comprar carro\n");
-        printf("4. Terminar sessão\n\n");
+        printf("4. Terminar sessão");
+        lineBreak(2);
       }
 
       printf("Escolha uma opção: ");
@@ -145,11 +152,11 @@ int main()
         case 6:
           headerTerminateSession();
           lineBreak(2);
-          success("A sessão foi terminada.\n");
+          success("A sessão foi terminada.");
           authenticated = 0;
           break;
         default:
-          error("Opção inválida! Tente novamente.\n");
+          error("Opção inválida! Tente novamente.");
         }
       }
       else
@@ -176,15 +183,15 @@ int main()
           }
           else
           {
-            warning("Não há carros disponíveis para compra.\n");
+            warning("Não há carros disponíveis para compra.");
           }
           break;
         case 4:
-          success("A sessão foi terminada.\n");
+          success("A sessão foi terminada.");
           authenticated = 0;
           break;
         default:
-          error("Opção inválida! Tente novamente.\n");
+          error("Opção inválida! Tente novamente.");
         }
       }
       printf("Pressione ENTER para continuar...");

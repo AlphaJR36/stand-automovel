@@ -12,7 +12,7 @@ void listPurchases(char purchases[][5][50], int count)
 
   if (count == 0)
   {
-    error("Não há compras realizadas.\n");
+    error("Não há compras realizadas.");
     return;
   }
 
@@ -30,7 +30,7 @@ void savePurchases(char purchases[MAX_PURCHASES][5][50], int count)
   FILE *file = fopen(FILENAME_PURCHASES, "w");
   if (file == NULL)
   {
-    error("Erro ao abrir o arquivo de compras.\n");
+    error("Erro ao abrir o arquivo de compras.");
     return;
   }
 
