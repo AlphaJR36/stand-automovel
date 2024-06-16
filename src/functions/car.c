@@ -33,7 +33,7 @@ void addCar(Car cars[], int *count)
 
     cars[*count] = newCar;
     (*count)++;
-    printf("O carro foi adicionado com sucesso!\n");
+    success("O carro foi adicionado!\n");
   }
   else
   {
@@ -43,6 +43,9 @@ void addCar(Car cars[], int *count)
 
 void listCars(Car cars[], int count)
 {
+  headerShowCars();
+  lineBreak(2);
+
   if (count == 0)
   {
     warning("Não há carros disponíveis.\n");
@@ -58,6 +61,9 @@ void listCars(Car cars[], int count)
 
 void searchCar(Car cars[], int count)
 {
+  headerFindByModel();
+  lineBreak(2);
+
   if (count == 0)
   {
     warning("Não há carros disponíveis para pesquisa.\n");
@@ -88,6 +94,9 @@ void searchCar(Car cars[], int count)
 
 void removeCar(Car cars[], int *count)
 {
+  headerRemoveCar();
+  lineBreak(2);
+
   if (*count == 0)
   {
     error("Nenhum carro está disponível para remover.\n");
@@ -123,6 +132,9 @@ void removeCar(Car cars[], int *count)
 
 void buyCar(Car cars[], int *count, char *username)
 {
+  headerBuyCar();
+  lineBreak(2);
+
   if (*count == 0)
   {
     warning("Nenhum carro está disponível para compra.\n");

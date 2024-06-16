@@ -3,11 +3,15 @@
 
 #include "../include/purchase.h"
 #include "../include/utility.h"
+#include "../include/header.h"
 
 #define FILENAME_PURCHASES "purchases.txt"
 
 void listPurchases(char purchases[][5][50], int count)
 {
+  headerShowPurchaseHistory();
+  lineBreak(2);
+
   if (count == 0)
   {
     error("Não há compras realizadas.\n");

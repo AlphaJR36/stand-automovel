@@ -145,6 +145,8 @@ int main()
         case 6:
           saveCars(cars, carCount);
           savePurchases(purchases, purchaseCount);
+          headerTerminateSession();
+          lineBreak(2);
           success("A sessão foi terminada.\n");
           authenticated = 0;
           break;

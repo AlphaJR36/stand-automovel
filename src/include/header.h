@@ -8,5 +8,11 @@ void headerLogin();
 void headerSignIn();
 void headerSignUp();
 void headerAddNewCar();
+void headerShowCars();
+void headerFindByModel();
+void headerRemoveCar();
+void headerShowPurchaseHistory();
+void headerBuyCar();
+void headerTerminateSession();
 
 #endif
