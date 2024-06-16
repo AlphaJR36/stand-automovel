@@ -3,9 +3,8 @@
 
 #include "../include/car.h"
 #include "../include/utility.h"
+#include "../include/purchase.h"
 #include "../include/header.h"
-
-#define FILENAME_CARS "cars.txt"
 
 void addCar(Car cars[], int *count)
 {
@@ -34,6 +33,8 @@ void addCar(Car cars[], int *count)
     cars[*count] = newCar;
     (*count)++;
     success("O carro foi adicionado!\n");
+
+    saveCars(cars, *count);
   }
   else
   {
@@ -80,7 +81,7 @@ void searchCar(Car cars[], int count)
   {
     if (strcmp(cars[i].model, searchModel) == 0)
     {
-      printf("Modelo: %s, Marca: %s, Ano: %d, Preço: €%.2f\n", cars[i].model, cars[i].brand, cars[i].year, cars[i].price);
+      printf("Carro encontrado - Modelo: %s, Marca: %s, Ano: %d, Preço: €%.2f\n", cars[i].model, cars[i].brand, cars[i].year, cars[i].price);
       found = 1;
       break;
     }
@@ -88,7 +89,7 @@ void searchCar(Car cars[], int count)
 
   if (!found)
   {
-    error("O carro não foi encontrado.\n");
+    error("Nenhum carro encontrado com esse modelo.\n");
   }
 }
 
@@ -99,38 +100,40 @@ void removeCar(Car cars[], int *count)
 
   if (*count == 0)
   {
-    error("Nenhum carro está disponível para remover.\n");
+    warning("Não há carros disponíveis para remoção.\n");
     return;
   }
 
-  char removeModel[50];
-  printf("Insira o modelo do carro que deseja remover: ");
-  fgets(removeModel, 50, stdin);
-  removeModel[strcspn(removeModel, "\n")] = '\0';
+  char model[50];
+  printf("Insira o modelo do carro a ser removido: ");
+  fgets(model, 50, stdin);
+  model[strcspn(model, "\n")] = '\0';
 
   int found = 0;
   for (int i = 0; i < *count; i++)
   {
-    if (strcmp(cars[i].model, removeModel) == 0)
+    if (strcmp(cars[i].model, model) == 0)
     {
       for (int j = i; j < *count - 1; j++)
       {
         cars[j] = cars[j + 1];
       }
       (*count)--;
-      success("O carro foi removido.\n");
       found = 1;
+      success("O carro foi removido!\n");
+
+      saveCars(cars, *count);
       break;
     }
   }
 
   if (!found)
   {
-    error("O carro não encontrado.\n");
+    error("Nenhum carro encontrado com esse modelo.\n");
   }
 }
 
-void buyCar(Car cars[], int *count, char *username)
+void buyCar(Car cars[], int *count, char purchases[][5][50], int *purchaseCount, char *username)
 {
   headerBuyCar();
   lineBreak(2);
@@ -151,12 +154,38 @@ void buyCar(Car cars[], int *count, char *username)
   {
     if (strcmp(cars[i].model, buyModel) == 0)
     {
-      success("A compra foi realizada!\n");
-      for (int j = i; j < *count - 1; j++)
+      printf("Carro encontrado - Modelo: %s, Marca: %s, Ano: %d, Preço: €%.2f\n", cars[i].model, cars[i].brand, cars[i].year, cars[i].price);
+
+      // Confirmar se deseja comprar o carro
+      printf("Deseja comprar este carro? (S/N): ");
+      char choice;
+      scanf(" %c", &choice);
+      getchar(); // Consumir o caractere newline pendente no buffer
+
+      if (choice == 'S' || choice == 's')
       {
-        cars[j] = cars[j + 1];
+        success("A compra foi realizada!\n");
+
+        // Adicionar informações da compra ao histórico
+        snprintf(purchases[*purchaseCount][0], 50, "%s", username);
+        snprintf(purchases[*purchaseCount][1], 50, "%s", cars[i].model);
+        snprintf(purchases[*purchaseCount][2], 50, "%s", cars[i].brand);
+        snprintf(purchases[*purchaseCount][3], 50, "%d", cars[i].year);
+        snprintf(purchases[*purchaseCount][4], 50, "%.2f", cars[i].price);
+        (*purchaseCount)++;
+
+        // Remover o carro do array de carros
+        for (int j = i; j < *count - 1; j++)
+        {
+          cars[j] = cars[j + 1];
+        }
+        (*count)--;
       }
-      (*count)--;
+      else
+      {
+        printf("Compra cancelada.\n");
+      }
+
       found = 1;
       break;
     }
@@ -166,14 +195,17 @@ void buyCar(Car cars[], int *count, char *username)
   {
     error("O carro não foi encontrado.\n");
   }
+
+  saveCars(cars, *count);
+  savePurchases(purchases, *purchaseCount);
 }
 
 void saveCars(Car cars[], int count)
 {
-  FILE *file = fopen(FILENAME_CARS, "w");
+  FILE *file = fopen("cars.txt", "w");
   if (file == NULL)
   {
-    error("Abrir o arquivo para guardar os carros.\n");
+    error("Erro ao abrir o arquivo de carros.\n");
     return;
   }
 
@@ -187,15 +219,16 @@ void saveCars(Car cars[], int count)
 
 void loadCars(Car cars[], int *count)
 {
-  FILE *file = fopen(FILENAME_CARS, "r");
+  FILE *file = fopen("cars.txt", "r");
   if (file == NULL)
   {
-    error("Abrir o arquivo para carregar os carros.\n");
     return;
   }
 
-  while (fscanf(file, "%49[^,],%49[^,],%d,%f\n", cars[*count].model, cars[*count].brand, &cars[*count].year, &cars[*count].price) == 4)
+  char line[200];
+  while (fgets(line, sizeof(line), file))
   {
+    sscanf(line, "%[^:]:%[^:]:%d:%f", cars[*count].model, cars[*count].brand, &cars[*count].year, &cars[*count].price);
     (*count)++;
   }
 

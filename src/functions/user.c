@@ -5,8 +5,6 @@
 #include "../include/utility.h"
 #include "../include/header.h"
 
-#define FILENAME_USERS "users.txt"
-
 int authenticateUser(User users[], int count, char *username, char *password)
 {
   for (int i = 0; i < count; i++)

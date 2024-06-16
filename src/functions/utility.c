@@ -52,7 +52,7 @@ void showLoginSuccessAnimation()
   Sleep(700);
   printf("!");
   Sleep(700);
-  setConsoleColor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE); // Reseta para a cor padrão
+  setConsoleColor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
   lineBreak(1);
 }
 

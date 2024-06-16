@@ -1,13 +1,13 @@
 {
   "files.associations": {
-    ".env.*": "dotenv",
-    ".prettierrc": "json",
-    "*.css": "css",
     "stdio.h": "c",
     "string.h": "c",
     "utility.h": "c",
     "car.h": "c",
     "conio.h": "c",
-    "windows.h": "c"
+    "windows.h": "c",
+    "user.h": "c",
+    "purchase.h": "c",
+    "header.h": "c"
   }
 }

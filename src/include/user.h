@@ -2,6 +2,7 @@
 #define USER_H
 
 #define MAX_USERS 100
+#define FILENAME_USERS "users.txt"
 
 typedef struct
 {

@@ -1,2 +1,0 @@
-guilherme,golf 4,volkswagen,1990,9000.00
-carolina,,,0,0.00

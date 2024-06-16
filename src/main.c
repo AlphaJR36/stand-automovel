@@ -30,8 +30,8 @@ int main()
   int exitProgram = 0;
 
   loadCars(cars, &carCount);
-  loadUsers(users, &userCount);
   loadPurchases(purchases, &purchaseCount);
+  loadUsers(users, &userCount);
 
   while (!exitProgram)
   {
@@ -143,8 +143,6 @@ int main()
           listPurchases(purchases, purchaseCount);
           break;
         case 6:
-          saveCars(cars, carCount);
-          savePurchases(purchases, purchaseCount);
           headerTerminateSession();
           lineBreak(2);
           success("A sessão foi terminada.\n");
@@ -167,7 +165,8 @@ int main()
         case 3:
           if (carCount > 0)
           {
-            buyCar(cars, &carCount, username);
+            buyCar(cars, &carCount, purchases, &purchaseCount, username);
+
             snprintf(purchases[purchaseCount][0], 50, "%s", username);
             snprintf(purchases[purchaseCount][1], 50, "%s", cars[carCount - 1].model);
             snprintf(purchases[purchaseCount][2], 50, "%s", cars[carCount - 1].brand);
@@ -181,8 +180,6 @@ int main()
           }
           break;
         case 4:
-          saveCars(cars, carCount);
-          savePurchases(purchases, purchaseCount);
           success("A sessão foi terminada.\n");
           authenticated = 0;
           break;
