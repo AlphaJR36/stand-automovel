@@ -163,18 +163,16 @@ void buyCar(Car cars[], int *count, char purchases[][5][50], int *purchaseCount,
       printf("Carro encontrado - Modelo: %s, Marca: %s, Ano: %d, Preço: €%.2f\n", cars[i].model, cars[i].brand, cars[i].year, cars[i].price);
       lineBreak(2);
 
-      // Confirmar se deseja comprar o carro
       printf("Deseja comprar este carro? (S/N): ");
       char choice;
       scanf(" %c", &choice);
-      getchar(); // Consumir o caractere newline pendente no buffer
+      getchar();
 
       if (choice == 'S' || choice == 's')
       {
         lineBreak(2);
         success("A compra foi realizada!");
 
-        // Adicionar informações da compra ao histórico
         snprintf(purchases[*purchaseCount][0], 50, "%s", username);
         snprintf(purchases[*purchaseCount][1], 50, "%s", cars[i].model);
         snprintf(purchases[*purchaseCount][2], 50, "%s", cars[i].brand);
@@ -182,7 +180,6 @@ void buyCar(Car cars[], int *count, char purchases[][5][50], int *purchaseCount,
         snprintf(purchases[*purchaseCount][4], 50, "%.2f", cars[i].price);
         (*purchaseCount)++;
 
-        // Remover o carro do array de carros
         for (int j = i; j < *count - 1; j++)
         {
           cars[j] = cars[j + 1];
